@@ -15,12 +15,10 @@
     <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="Generated\**" />
-    <Compile Remove="Generated\**" />
-    <EmbeddedResource Remove="Generated\**" />
-    <None Remove="Generated\**" />
-  </ItemGroup>
+
+  <Target Name="RemoveDirectories">
+    <RemoveDir Directories="Generated" />
+  </Target>
 
 
 </Project>
