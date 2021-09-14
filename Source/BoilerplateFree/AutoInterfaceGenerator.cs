@@ -15,33 +15,35 @@ namespace BoilerplateFree
     public class AutoInterfaceGenerator: ISourceGenerator
     {
         private AttributeClassSyntaxReceiver classSyntaxReceiver = null!;
-        public List<string> Log { get; } = new List<string>();
+        public List<string> Log { get; } = new();
 
         public void Initialize(GeneratorInitializationContext context)
         {
             this.classSyntaxReceiver = new AttributeClassSyntaxReceiver(this.Log, "AutoGenerateInterface");
 
-#if DEBUG
-            if (!Debugger.IsAttached)
-            {
-                Debugger.Launch();
-            }
-#endif
+            context.RegisterForSyntaxNotifications(() => this.classSyntaxReceiver);
 
-            context.RegisterForSyntaxNotifications(() =>
-            {
-                return this.classSyntaxReceiver;
-            });
-
-            // Log.Add("test?");
-            // Debug.WriteLine("Execute code generator");
-            // Console.WriteLine("WOOW");
         }
 
         public void Execute(GeneratorExecutionContext context)
         {
 
+            try
+            {
+                this.ExecuteInTryCatch(context);
+            }
+            catch (Exception e)
+            {
+                this.Log.Add(e.StackTrace);
+            }
 
+            context.AddSource("Logs2", SourceText.From($@"/*{ Environment.NewLine + string.Join(Environment.NewLine, this.Log) + Environment.NewLine}*/", Encoding.UTF8));
+
+        }
+
+
+        public void ExecuteInTryCatch(GeneratorExecutionContext context)
+        {
             foreach (var declaringClass in this.classSyntaxReceiver.ClassesToGenerateFor)
             {
                 var names = new List<string>();
@@ -88,9 +90,6 @@ namespace {classNamespace} {{
 
 ", Encoding.UTF8));
             }
-
-            context.AddSource("Logs2", SourceText.From($@"/*{ Environment.NewLine + string.Join(Environment.NewLine, this.Log) + Environment.NewLine}*/", Encoding.UTF8));
-
         }
     }
 

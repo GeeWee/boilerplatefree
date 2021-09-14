@@ -23,7 +23,7 @@ namespace BoilerplateFree
 
             if (syntaxNode is ClassDeclarationSyntax classSyntax)
             {
-                // Log.Add($"Class: " + classSyntax.GetClassName());
+                Log.Add($"Class: " + classSyntax.GetClassName());
 
                 if (classSyntax.HaveAttribute(this.attributeName))
                 {

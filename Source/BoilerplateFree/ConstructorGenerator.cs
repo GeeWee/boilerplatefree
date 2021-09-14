@@ -22,13 +22,6 @@ namespace BoilerplateFree
         {
             this.classSyntaxReceiver = new AttributeClassSyntaxReceiver(this.Log, "AutoGenerateConstructor");
 
-#if DEBUG
-            if (!Debugger.IsAttached)
-            {
-                Debugger.Launch();
-            }
-#endif
-
             context.RegisterForSyntaxNotifications(() =>
             {
                 return this.classSyntaxReceiver;
