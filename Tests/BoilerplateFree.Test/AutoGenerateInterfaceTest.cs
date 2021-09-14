@@ -1,6 +1,7 @@
 namespace BoilerplateFree.Test
 {
     using System;
+    using Subpackage;
     using Xunit;
 
     public class AutoGenerateInterfaceTest
@@ -13,6 +14,20 @@ namespace BoilerplateFree.Test
             // Act
             testClass.Foo();
             testClass.Bar(param1: 3);
+        }
+
+        [Fact]
+        public void AutoGenerateInterface_ShouldGenerateInterfaceWithSubclasses_WhenUsingsAreInsideNamespace()
+        {
+            IClassWithUsingsToGenerate testClass = new ClassWithUsingsToGenerate(new Subclass());
+            testClass.SetSubClass(new Subclass());
+        }
+
+        [Fact]
+        public void AutoGenerateInterface_ShouldGenerateInterfaceWithSubclasses_WhenUsingsAreOutsideNamespace()
+        {
+            IClassWithUsingsToGenerateOutsideNamespace testClass = new ClassWithUsingsToGenerateOutsideNamespace(new Subclass());
+            testClass.SetSubClass(new Subclass());
         }
 
         [AutoGenerateInterface]

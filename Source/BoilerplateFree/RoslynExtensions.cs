@@ -76,7 +76,7 @@ namespace BoilerplateFree
 
         public static List<string> GetUsings(this CompilationUnitSyntax root)
         {
-            return root.ChildNodes()
+            return root.DescendantNodes()
                 .OfType<UsingDirectiveSyntax>()
                 .Select(n => n.Name.ToString())
                 .ToList();
