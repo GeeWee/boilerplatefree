@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace BoilerplateFree.TestApplication.Controllers
+namespace SampleApplication.Controllers
 {
     [ApiController]
     [Route("[controller]")]

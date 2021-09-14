@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace BoilerplateFree.TestApplication
+namespace SampleApplication
 {
     public class Startup
     {
@@ -29,7 +29,7 @@ namespace BoilerplateFree.TestApplication
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "BoilerplateFree.TestApplication", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "SampleApplication", Version = "v1"});
             });
         }
 
@@ -40,8 +40,7 @@ namespace BoilerplateFree.TestApplication
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "BoilerplateFree.TestApplication v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SampleApplication v1"));
             }
 
             app.UseHttpsRedirection();

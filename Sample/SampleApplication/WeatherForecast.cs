@@ -1,6 +1,6 @@
 using System;
 
-namespace BoilerplateFree.TestApplication
+namespace SampleApplication
 {
     public class WeatherForecast
     {
