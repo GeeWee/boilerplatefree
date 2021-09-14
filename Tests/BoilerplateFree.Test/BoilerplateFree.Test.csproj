@@ -10,15 +10,9 @@
   </ItemGroup>
 
 
-  <PropertyGroup>
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
-  </PropertyGroup>
-
-
-  <Target Name="RemoveDirectories">
-    <RemoveDir Directories="Generated" />
-  </Target>
-
+<!--  <PropertyGroup>-->
+<!--    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>-->
+<!--    <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>-->
+<!--  </PropertyGroup>-->
 
 </Project>
