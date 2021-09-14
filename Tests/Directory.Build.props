@@ -14,4 +14,14 @@
     </PackageReference>
   </ItemGroup>
 
+
+  <PropertyGroup Label="Build">
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
 </Project>

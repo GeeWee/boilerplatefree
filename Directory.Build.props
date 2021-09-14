@@ -2,7 +2,7 @@
 
   <PropertyGroup Label="Build">
     <LangVersion>latest</LangVersion>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+<!--    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>-->
     <AnalysisLevel>latest</AnalysisLevel>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

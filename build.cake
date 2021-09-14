@@ -70,11 +70,11 @@ Task("Pack")
         }
 
         DotNetCorePack(
-            ".",
+            "./Source/BoilerplateFree",
             new DotNetCorePackSettings()
             {
                 Configuration = configuration,
-                IncludeSymbols = true,
+                IncludeSymbols = false, // dunno why it has to be false.
                 MSBuildSettings = buildSettings,
                 NoBuild = true,
                 NoRestore = true,

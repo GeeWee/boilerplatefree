@@ -30,12 +30,29 @@ namespace BoilerplateFree
 
         public void Execute(GeneratorExecutionContext context)
         {
+            try
+            {
+                this.ExecuteInTryCatch(context);
+            }
+            catch (Exception e)
+            {
+                this.Log.Add(e.StackTrace);
+            }
+
+            context.AddSource("Logs",
+                SourceText.From(
+                    $@"/*{Environment.NewLine + string.Join(Environment.NewLine, this.Log) + Environment.NewLine}*/",
+                    Encoding.UTF8));
+        }
+
+        public void ExecuteInTryCatch(GeneratorExecutionContext context)
+        {
             foreach (var declaringClass in this.classSyntaxReceiver.ClassesToGenerateFor)
             {
                 var names = new List<string>();
                 var types = new List<string>();
 
-                var usings = new List<string>();
+                // TODO there is a GetUsings in the extensions
 
                 var compilationUnit = declaringClass.GetCompilationUnit();
 
@@ -44,38 +61,30 @@ namespace BoilerplateFree
                 this.Log.Add($"Namespace: " + classNamespace);
                 this.Log.Add($"usings:" + declaringClass.GetCompilationUnit().Usings.ToFullString());
 
-                var nodes = declaringClass.DescendantNodes().OfType<FieldDeclarationSyntax>();
-                foreach (var propertyNode in nodes)
+                var fieldNodes = declaringClass.GetFields();
+                foreach (var field in fieldNodes)
                 {
-                    this.Log.Add(propertyNode.ToFullString());
-                    this.Log.Add(propertyNode.GetType().ToString());
+                    this.Log.Add($"{field.ToFullString()} : type : {field.GetType()}");
 
-                    var name = propertyNode.Declaration.Variables[0].Identifier.ToFullString();
+                    names.Add(field.GetFieldName());
+                    types.Add(field.GetFieldType()); // note that this is not the full type.
 
-
-                    // not the full type
-                    var classType = propertyNode.Declaration.Type.ToFullString();
-
-                    names.Add(name);
-                    types.Add(classType);
-
-                    this.Log.Add(classType);
-
-                    this.Log.Add(propertyNode.Declaration.Type.ToString());
+                    this.Log.Add(field.Declaration.Type.ToString());
                 }
 
+                // Build up list of parameters
                 var parameterList = "";
                 for (int i = 0; i < names.Count - 1; i++)
                 {
-                    parameterList += $"{types[i]} {names[i]},";
+                    parameterList += $"{types[i]} {names[i].ToCamelCase()}, ";
                 }
 
-                parameterList += $"{types.Last()} {names.Last()}";
+                parameterList += $"{types.Last()} {names.Last().ToCamelCase()}";
 
                 var assignmentList = "";
                 for (int i = 0; i < names.Count; i++)
                 {
-                    assignmentList += $"this.{names[i]} = {names[i]}; \n";
+                    assignmentList += $"this.{names[i]} = {names[i].ToCamelCase()}; \n";
                 }
 
                 var declaringClassName = declaringClass.GetClassName();
@@ -97,12 +106,6 @@ namespace {classNamespace} {{
 
 ", Encoding.UTF8));
             }
-
-
-            context.AddSource("Logs",
-                SourceText.From(
-                    $@"/*{Environment.NewLine + string.Join(Environment.NewLine, this.Log) + Environment.NewLine}*/",
-                    Encoding.UTF8));
         }
     }
 }

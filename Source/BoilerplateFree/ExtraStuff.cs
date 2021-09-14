@@ -33,6 +33,24 @@ namespace BoilerplateFree
             return proxy.Identifier.Text;
         }
 
+        public static IEnumerable<FieldDeclarationSyntax> GetFields(this ClassDeclarationSyntax declaringClass)
+        {
+            var nodes = declaringClass.DescendantNodes().OfType<FieldDeclarationSyntax>();
+            return nodes;
+        }
+
+        public static string GetFieldName(this FieldDeclarationSyntax declaringField)
+        {
+            var name = declaringField.Declaration.Variables[0].Identifier.ToFullString();
+            return name;
+        }
+
+        public static string GetFieldType(this FieldDeclarationSyntax declaringField)
+        {
+            var name = declaringField.Declaration.Type.ToFullString();
+            return name;
+        }
+
         public static string GetClassModifier(this ClassDeclarationSyntax proxy)
         {
             return proxy.Modifiers.ToFullString().Trim();
@@ -42,7 +60,7 @@ namespace BoilerplateFree
         {
             return classSyntax.AttributeLists.Count > 0 &&
                    classSyntax.AttributeLists.SelectMany(al => al.Attributes
-                           .Where(a => ((a.Name as IdentifierNameSyntax)!).Identifier.Text == attributeName))
+                           .Where(a => ((a.Name as IdentifierNameSyntax))?.Identifier.Text == attributeName))
                        .Any();
         }
 
