@@ -12,9 +12,12 @@
 
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild> <!-- Generates a package at build -->
-    <IncludeBuildOutput>false</IncludeBuildOutput> <!-- Do not include the generator as a lib dependency -->
+<!--    <IncludeBuildOutput>true</IncludeBuildOutput> &lt;!&ndash; Normally we wouldn't include the generator as a lib dependency - but we have annotations that we want to provide &ndash;&gt;-->
     <!--See https://github.com/nuget/home/issues/8583 -->
-    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+<!--    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>-->
+    <!--    To fix nuget error?-->
+<!--    <IsPackable>true</IsPackable>-->
+
 
   </PropertyGroup>
 
