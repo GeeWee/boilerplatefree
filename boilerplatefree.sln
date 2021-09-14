@@ -10,11 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{719809
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F20E2797-D1E3-4321-91BB-FAE54954D2A0}"
 	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		appveyor.yml = appveyor.yml
-		azure-pipelines.yml = azure-pipelines.yml
 		build.cake = build.cake
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
@@ -56,9 +53,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{0555
 		.github\SECURITY.md = .github\SECURITY.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "boilerplatefree", "Source\boilerplatefree\boilerplatefree.csproj", "{E20801DC-726C-4177-A58D-7F7152823569}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoilerplateFree", "Source\BoilerplateFree\BoilerplateFree.csproj", "{E20801DC-726C-4177-A58D-7F7152823569}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "boilerplatefree.Test", "Tests\boilerplatefree.Test\boilerplatefree.Test.csproj", "{D7CE4AAE-29C1-45D0-BF4C-1183C01CB211}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoilerplateFree.Test", "Tests\BoilerplateFree.Test\BoilerplateFree.Test.csproj", "{D7CE4AAE-29C1-45D0-BF4C-1183C01CB211}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{EFE1E5ED-D337-4874-82EC-D9FA0BC7D3AB}"
 	ProjectSection(SolutionItems) = preProject

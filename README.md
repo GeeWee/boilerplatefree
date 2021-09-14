@@ -1,6 +1,6 @@
 ![Banner](Images/Banner.png)
 
-# boilerplatefree
+# BoilerPlateFree
 
 [![GitHub Actions Status](https://github.com/GeeWee/boilerplatefree/workflows/Build/badge.svg?branch=main)](https://github.com/GeeWee/boilerplatefree/actions) [![boilerplatefree NuGet Package Downloads](https://img.shields.io/nuget/dt/boilerplatefree)](https://www.nuget.org/packages/boilerplatefree)
 

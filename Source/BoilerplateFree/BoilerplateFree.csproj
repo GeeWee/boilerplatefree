@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Build">
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package">
+    <Product>BoilerplateFree</Product>
+    <Description>Remove boilerplate via source generators</Description>
+    <PackageTags>Tag1;Tag2;Tag3</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild> <!-- Generates a package at build -->
+    <IncludeBuildOutput>false</IncludeBuildOutput> <!-- Do not include the generator as a lib dependency -->
+    <!--See https://github.com/nuget/home/issues/8583 -->
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Package the generator in the analyzer directory of the nuget package -->
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false"/>
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.11.0"/>
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" PrivateAssets="all"/>
+  </ItemGroup>
+
+</Project>

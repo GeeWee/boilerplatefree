@@ -2,10 +2,11 @@
 
   <PropertyGroup Label="Build">
     <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>BoilerplateFree.Test</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup Label="Project References">
-    <ProjectReference Include="..\..\Source\boilerplatefree\boilerplatefree.csproj" />
+    <ProjectReference Include="..\..\Source\BoilerplateFree\BoilerplateFree.csproj" />
   </ItemGroup>
 
 </Project>

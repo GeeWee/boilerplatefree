@@ -1,6 +1,6 @@
-namespace boilerplatefree.Test
+namespace BoilerplateFree.Test
 {
-    using boilerplatefree;
+    using BoilerplateFree;
     using Xunit;
 
     public class Class1Test
@@ -8,9 +8,6 @@ namespace boilerplatefree.Test
         [Fact]
         public void Given_When_Then()
         {
-            var class1 = new Class1();
-
-            Assert.NotNull(class1);
         }
     }
 }

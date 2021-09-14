@@ -9,20 +9,19 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package">
-    <Authors>Project Author</Authors>
-    <Company>Project Author</Company>
+    <Authors>Gustav Wengel</Authors>
+    <Company>SCADA MInds</Company>
     <Copyright>Copyright © Project Author. All rights Reserved</Copyright>
-    <PackageProjectUrl>https://github.com/GeeWee/boilerplatefree</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/GeeWee/BoilerplateFree</PackageProjectUrl>
     <PackageIcon>Icon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/GeeWee/boilerplatefree.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/GeeWee/BoilerplateFree.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>https://github.com/GeeWee/boilerplatefree/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/GeeWee/BoilerplateFree/releases</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup Label="Package References">
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" PrivateAssets="all" Version="16.10.56" />
     <PackageReference Include="MinVer" PrivateAssets="all" Version="2.5.0" />
-    <PackageReference Include="StyleCop.Analyzers" PrivateAssets="all" Version="1.2.0-beta.354" />
   </ItemGroup>
 
 </Project>
