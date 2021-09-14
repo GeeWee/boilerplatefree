@@ -10,7 +10,5 @@
 4. Include a link to the issue in your pull request.
 
 # Coding Guidelines
-
-- Projects use StyleCop and .editorconfig to produce style warnings. Please fix all warnings in any code you submit.
 - Write unit tests for any code written.
 

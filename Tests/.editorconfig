@@ -2,6 +2,12 @@
 # StyleCop
 ##########################################
 
+# We don't care about warnings from this project
+[*.{cs,csx,cake,vb,vbx}]
+# Default Severity for all .NET Code Style rules below
+dotnet_analyzer_diagnostic.severity = none
+
+
 [*]
 # SA0001: XML comment analysis is disabled due to project configuration
 # Justification: Comments turned off
