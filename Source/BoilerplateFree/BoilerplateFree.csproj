@@ -15,13 +15,15 @@
     <IncludeBuildOutput>false</IncludeBuildOutput> <!-- Do not include the generator as a lib dependency -->
     <!--See https://github.com/nuget/home/issues/8583 -->
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <!--    To fix nuget error?-->
+<!--    <IsPackable>true</IsPackable>-->
+
 
   </PropertyGroup>
 
   <ItemGroup>
     <!-- Package the generator in the analyzer directory of the nuget package -->
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-
   </ItemGroup>
 
   <ItemGroup>
