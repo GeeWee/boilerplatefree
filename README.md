@@ -11,4 +11,5 @@ Remove boilerplate via source generators
 
 
 # TODO
-Somehow format the generated source files, maybe by including dotnet-format?
+- Somehow format the generated source files, maybe by including dotnet-format?
+- Ensure that this also works with third-party dependencies taken as parameters.
