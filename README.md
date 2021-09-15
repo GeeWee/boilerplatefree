@@ -3,7 +3,7 @@
 
 **This project is still in alpha stages. Use at your own risk**
 
-Remove boilerplate via C# 9 [source generators](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/) and attributes. Currently there are two attributes supported.
+Remove boilerplate via C# 9 [source generators](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/) and attributes. The attributes currently supported are:
 
 # AutoGenerateConstructor
 This attribute takes all private fields and generates a constructor based on them. Never write another boilerplate constructor again!
@@ -99,7 +99,3 @@ public interface IGenerateAutoInterfaceClass
     public int Bar(int param1);
 }
 ```
-
-
-# TODO
-- Somehow format the generated source files better, maybe by including dotnet-format?
