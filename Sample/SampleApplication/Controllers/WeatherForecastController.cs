@@ -2,38 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BoilerplateFree;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NLog;
+using SampleApplication.Services;
+using Serilog;
 
 namespace SampleApplication.Controllers
 {
+    [AddNLog]
+    [AutoGenerateConstructor]
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public partial class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
+        private readonly WeatherService _weatherService;
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-                {
-                    Date = DateTime.Now.AddDays(index),
-                    TemperatureC = rng.Next(-20, 55),
-                    Summary = Summaries[rng.Next(Summaries.Length)]
-                })
-                .ToArray();
+            _logger.Warn("!!!!!!!!!!!!!Hello from NLOG weather forecast controller!!!");
+            
+            return _weatherService.Get();
         }
     }
 }

@@ -1,9 +1,13 @@
 using System;
+using SampleApplication.Controllers;
+using Serilog;
 
 namespace SampleApplication
 {
     public class WeatherForecast
     {
+
+        private static Serilog.ILogger _logger = Log.ForContext<WeatherForecast>();
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }

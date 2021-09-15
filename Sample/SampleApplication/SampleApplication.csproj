@@ -5,6 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Serilog" Version="2.10.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     </ItemGroup>
 
@@ -12,9 +15,20 @@
       <ProjectReference Include="..\..\Source\BoilerplateFree\BoilerplateFree.csproj" OutputItemType="Analyzer" />
     </ItemGroup>
 
-      <PropertyGroup>
-          <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-          <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
-      </PropertyGroup>
+<!--      <PropertyGroup>-->
+<!--          <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>-->
+<!--          <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>-->
+<!--      </PropertyGroup>-->
+
+
+    <ItemGroup>
+        <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.*" />
+        <PackageReference Include="NLog" Version="4.7.*" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="Generated" />
+    </ItemGroup>
 
 </Project>

@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SampleApplication.Services;
 
 namespace SampleApplication
 {
@@ -26,6 +27,7 @@ namespace SampleApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<WeatherService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -43,7 +45,6 @@ namespace SampleApplication
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SampleApplication v1"));
             }
 
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 
