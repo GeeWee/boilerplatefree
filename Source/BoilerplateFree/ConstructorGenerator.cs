@@ -108,8 +108,6 @@ namespace {classNamespace} {{
     }}
 
 }}
-
-
 ", Encoding.UTF8));
             }
         }
