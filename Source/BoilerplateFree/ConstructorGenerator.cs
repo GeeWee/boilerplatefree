@@ -64,7 +64,8 @@ namespace BoilerplateFree
                 // this.Log.Add($"Usings count: {compilationUnit.GetUsings().Count}");
                 // this.Log.Add($"usings:" + string.Join(",", compilationUnit.GetUsings()));
 
-                var usingStrings = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsings());
+                var usingsInsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsInsideNamespace());
+                var usingsOutsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsOutsideNamespace());
 
                 var fieldNodes = declaringClass.GetFields();
                 foreach (var field in fieldNodes)
@@ -95,8 +96,9 @@ namespace BoilerplateFree
                 var declaringClassName = declaringClass.GetClassName();
                 context.AddSource($"{declaringClassName}.cs", SourceText.From($@"
 
+{usingsOutsideNamespace}
 namespace {classNamespace} {{
-{usingStrings}
+{usingsInsideNamespace}
 
     public partial class {declaringClassName} {{
 

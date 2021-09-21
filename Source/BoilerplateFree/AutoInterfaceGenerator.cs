@@ -49,7 +49,8 @@ namespace BoilerplateFree
 
                 var classNamespace = compilationUnit.GetNamespace();
 
-                var usings = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsings());
+                var usingsInsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsInsideNamespace());
+                var usingsOutsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsOutsideNamespace());
 
                 this.Log.Add($"Namespace: " + classNamespace);
 
@@ -71,9 +72,9 @@ namespace BoilerplateFree
 
                 var declaringClassName = declaringClass.GetClassName();
                 context.AddSource($"I{declaringClassName}.cs", SourceText.From($@"
-
+{usingsOutsideNamespace}
 namespace {classNamespace} {{
-    {usings}
+{usingsInsideNamespace}
 
     public interface I{declaringClassName} {{
 

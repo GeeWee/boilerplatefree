@@ -26,9 +26,4 @@
         <PackageReference Include="NLog" Version="4.7.*" />
     </ItemGroup>
 
-
-    <ItemGroup>
-      <Folder Include="Generated" />
-    </ItemGroup>
-
 </Project>

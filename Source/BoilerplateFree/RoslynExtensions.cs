@@ -74,9 +74,19 @@ namespace BoilerplateFree
                 .ToString();
         }
 
-        public static List<string> GetUsings(this CompilationUnitSyntax root)
+        public static List<string> GetUsingsInsideNamespace(this CompilationUnitSyntax root)
         {
             return root.DescendantNodes()
+                .OfType<NamespaceDeclarationSyntax>()
+                .SelectMany(n => n.DescendantNodes())
+                .OfType<UsingDirectiveSyntax>()
+                .Select(n => n.Name.ToString())
+                .ToList();
+        }
+        
+        public static List<string> GetUsingsOutsideNamespace(this CompilationUnitSyntax root)
+        {
+            return root.ChildNodes()
                 .OfType<UsingDirectiveSyntax>()
                 .Select(n => n.Name.ToString())
                 .ToList();
