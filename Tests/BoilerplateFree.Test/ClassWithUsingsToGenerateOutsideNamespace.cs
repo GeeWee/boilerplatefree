@@ -1,4 +1,4 @@
-// Note that using is outisde the namespace here
+// Note that using is outside the namespace here
 using BoilerplateFree.Test.Subpackage;
 
 namespace BoilerplateFree.Test
