@@ -2,8 +2,8 @@ using System;
 
 namespace BoilerplateFree.Test
 {
-        [AutoGenerateInterface]
-        public class GenerateAutoInterfaceClass
+    [AutoGenerateInterface]
+        public class GenerateAutoInterfaceClass : IGenerateAutoInterfaceClass
         {
             public void Foo()
             {
@@ -12,9 +12,10 @@ namespace BoilerplateFree.Test
 
             public int Bar(int param1) => 1 + param1;
             
-            public int SuperSecret(int param1) => 1 + param1;
-
-            public int MyInt => 3;
-            public int MyNextInt { get; set; }
+            private int SuperSecretMethod(int param1) => 1 + param1;
+            private int SuperSecretProperty { get; set; }
+            
+            public int MyPublicIntWithDefaultImplementation => 3;
+            public int MyNextPublicInt { get; set; }
         }
 }

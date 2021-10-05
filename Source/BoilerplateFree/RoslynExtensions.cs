@@ -91,5 +91,12 @@ namespace BoilerplateFree
                 .Select(n => n.Name.ToString())
                 .ToList();
         }
+        
+        // public static IEnumerable<T> GetWithPublicKeyword<T>(IEnumerable<T> unfilteredTokens)
+        // where T: MemberDeclarationSyntax
+        // {
+        //     
+        // } 
+            
     }
 }
