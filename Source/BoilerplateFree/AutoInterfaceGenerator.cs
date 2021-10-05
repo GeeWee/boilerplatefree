@@ -62,7 +62,7 @@ namespace BoilerplateFree
 
                 var publicProperties = GetPublicProperties(declaringClass);
 
-                var classMethods = GetClassMethods(declaringClass);
+                var classMethods = GetPublicClassMethods(declaringClass);
 
                 var declaringClassName = declaringClass.GetClassName();
                 context.AddSource($"I{declaringClassName}.cs", SourceText.From($@"
@@ -82,14 +82,12 @@ namespace {classNamespace} {{
             }
         }
 
-        private string GetClassMethods(ClassDeclarationSyntax declaringClass)
+        private string GetPublicClassMethods(ClassDeclarationSyntax declaringClass)
         {
-            string classMethods = "";
+            string classMethodsString = "";
 
-            var nodes = declaringClass.ChildNodes().OfType<MethodDeclarationSyntax>();
-
-            var publicNodes = nodes.Where(property =>
-                property.Modifiers.Any(modifier => modifier.Kind() == SyntaxKind.PublicKeyword));
+            var publicNodes = declaringClass.ChildNodes().OfType<MethodDeclarationSyntax>()
+                .GetWithPublicKeyword();
 
             foreach (var methodDeclarationSyntax in publicNodes)
             {
@@ -99,48 +97,43 @@ namespace {classNamespace} {{
 
                 // this is hacky as fuck
                 // Split on first ocurrence of ) which is probably the method end.
-                classMethods += methodDeclarationSyntax.ToFullString().Split(')')[0] + "); \n";
+                classMethodsString += methodDeclarationSyntax.ToFullString().Split(')')[0] + "); \n";
             }
 
-            return classMethods;
+            return classMethodsString;
         }
 
         private string GetPublicProperties(ClassDeclarationSyntax declaringClass)
         {
-            string properties = "";
+            string propertiesString = "";
 
-            var nodes = declaringClass.ChildNodes().OfType<PropertyDeclarationSyntax>();
+            var publicProperties = declaringClass.ChildNodes()
+                .OfType<PropertyDeclarationSyntax>()
+                .GetWithPublicKeyword();
 
-            var publicNodes = nodes.Where(property =>
-                property.Modifiers.Any(modifier => modifier.Kind() == SyntaxKind.PublicKeyword));
 
-
-            foreach (var propertyDeclarationSyntax in publicNodes)
+            foreach (var propertyDeclarationSyntax in publicProperties)
             {
-                this.Log.Add("Property " + propertyDeclarationSyntax.Identifier.ToFullString());
-
                 this.Log.Add("Property " + propertyDeclarationSyntax.ToFullString());
 
-                var getter =
+                var hasGetter =
                     propertyDeclarationSyntax.AccessorList?.Accessors.FirstOrDefault(x =>
-                        x.IsKind(SyntaxKind.GetAccessorDeclaration));
+                        x.IsKind(SyntaxKind.GetAccessorDeclaration)) != null;
 
                 var hasExpressionBody = propertyDeclarationSyntax.ExpressionBody != null;
 
-                Log.Add("ExpressionBody: " + propertyDeclarationSyntax.ExpressionBody?.ToFullString() ??
-                        "no expression body");
 
-
-                var setter =
+                var hasSetter =
                     propertyDeclarationSyntax.AccessorList?.Accessors.FirstOrDefault(x =>
-                        x.IsKind(SyntaxKind.SetAccessorDeclaration));
+                        x.IsKind(SyntaxKind.SetAccessorDeclaration)) != null;
 
                 var getterSetterString = "";
-                if (getter != null || hasExpressionBody)
+                if (hasGetter || hasExpressionBody)
                 {
                     getterSetterString += "get; ";
                 }
-                if (setter != null)
+
+                if (hasSetter)
                 {
                     getterSetterString += "set; ";
                 }
@@ -153,11 +146,11 @@ namespace {classNamespace} {{
 
                 // this is hacky as fuck
                 // Split on first ocurrence of ) which is probably the method end.
-                properties += fullString + "\n";
+                propertiesString += fullString + "\n";
             }
 
 
-            return properties;
+            return propertiesString;
         }
     }
 }
