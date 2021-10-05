@@ -56,19 +56,7 @@ namespace BoilerplateFree
 
 
 
-                string classMethods = "";
-
-                var nodes = declaringClass.DescendantNodes().OfType<MethodDeclarationSyntax>();
-                foreach (var methodDeclarationSyntax in nodes)
-                {
-                    this.Log.Add(methodDeclarationSyntax.Identifier.ToFullString());
-
-                    this.Log.Add(methodDeclarationSyntax.ToFullString());
-
-                    // this is hacky as fuck
-                    // Split on first ocurrence of ) which is probably the method end.
-                    classMethods += methodDeclarationSyntax.ToFullString().Split(')')[0] + "); \n";
-                }
+                var classMethods = GetClassMethods(declaringClass);
 
                 var declaringClassName = declaringClass.GetClassName();
                 context.AddSource($"I{declaringClassName}.cs", SourceText.From($@"
@@ -84,6 +72,44 @@ namespace {classNamespace} {{
 }}
 ", Encoding.UTF8));
             }
+        }
+
+        private string GetClassMethods(ClassDeclarationSyntax declaringClass)
+        {
+            string classMethods = "";
+
+            var nodes = declaringClass.DescendantNodes().OfType<MethodDeclarationSyntax>();
+            foreach (var methodDeclarationSyntax in nodes)
+            {
+                this.Log.Add(methodDeclarationSyntax.Identifier.ToFullString());
+
+                this.Log.Add(methodDeclarationSyntax.ToFullString());
+
+                // this is hacky as fuck
+                // Split on first ocurrence of ) which is probably the method end.
+                classMethods += methodDeclarationSyntax.ToFullString().Split(')')[0] + "); \n";
+            }
+
+            return classMethods;
+        }
+        
+        private string GetPublicClassGetters(ClassDeclarationSyntax declaringClass)
+        {
+            string properties = "";
+
+            var nodes = declaringClass.DescendantNodes().OfType<PropertyDeclarationSyntax>();
+            foreach (var propertyDeclarationSyntax in nodes)
+            {
+                this.Log.Add(propertyDeclarationSyntax.Identifier.ToFullString());
+
+                this.Log.Add(propertyDeclarationSyntax.ToFullString());
+
+                // this is hacky as fuck
+                // Split on first ocurrence of ) which is probably the method end.
+                properties += propertyDeclarationSyntax.ToFullString().Split(')')[0] + "); \n";
+            }
+
+            return properties;
         }
     }
 
