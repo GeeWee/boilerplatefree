@@ -1,3 +1,5 @@
+using Microsoft.CodeAnalysis.CSharp;
+
 #pragma warning disable 1591
 namespace BoilerplateFree
 {
@@ -91,5 +93,14 @@ namespace BoilerplateFree
                 .Select(n => n.Name.ToString())
                 .ToList();
         }
+        
+        public static IEnumerable<T> GetWithPublicKeyword<T>(this IEnumerable<T> unfilteredTokens)
+        where T: MemberDeclarationSyntax
+        {
+            var publicNodes = unfilteredTokens.Where(property =>
+                property.Modifiers.Any(modifier => modifier.Kind() == SyntaxKind.PublicKeyword));
+            return publicNodes;
+        } 
+            
     }
 }

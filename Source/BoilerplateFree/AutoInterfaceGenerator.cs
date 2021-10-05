@@ -1,4 +1,7 @@
 // ReSharper disable SA1600
+
+using Microsoft.CodeAnalysis.CSharp;
+
 #pragma warning disable 1591
 namespace BoilerplateFree
 {
@@ -12,7 +15,7 @@ namespace BoilerplateFree
     using Microsoft.CodeAnalysis.Text;
 
     [Generator]
-    public class AutoInterfaceGenerator: ISourceGenerator
+    public class AutoInterfaceGenerator : ISourceGenerator
     {
         private AttributeClassSyntaxReceiver classSyntaxReceiver = null!;
         public List<string> Log { get; } = new();
@@ -22,7 +25,6 @@ namespace BoilerplateFree
             this.classSyntaxReceiver = new AttributeClassSyntaxReceiver(this.Log, "AutoGenerateInterface");
 
             context.RegisterForSyntaxNotifications(() => this.classSyntaxReceiver);
-
         }
 
         public void Execute(GeneratorExecutionContext context)
@@ -36,8 +38,10 @@ namespace BoilerplateFree
                 this.Log.Add(e.StackTrace);
             }
 
-            context.AddSource("Logs", SourceText.From($@"/*{ Environment.NewLine + string.Join(Environment.NewLine, this.Log) + Environment.NewLine}*/", Encoding.UTF8));
-
+            context.AddSource("Logs",
+                SourceText.From(
+                    $@"/*{Environment.NewLine + string.Join(Environment.NewLine, this.Log) + Environment.NewLine}*/",
+                    Encoding.UTF8));
         }
 
 
@@ -49,26 +53,16 @@ namespace BoilerplateFree
 
                 var classNamespace = compilationUnit.GetNamespace();
 
-                var usingsInsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsInsideNamespace());
-                var usingsOutsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsOutsideNamespace());
+                var usingsInsideNamespace =
+                    RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsInsideNamespace());
+                var usingsOutsideNamespace =
+                    RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsOutsideNamespace());
 
                 this.Log.Add($"Namespace: " + classNamespace);
 
+                var publicProperties = GetPublicProperties(declaringClass);
 
-
-                string classMethods = "";
-
-                var nodes = declaringClass.DescendantNodes().OfType<MethodDeclarationSyntax>();
-                foreach (var methodDeclarationSyntax in nodes)
-                {
-                    this.Log.Add(methodDeclarationSyntax.Identifier.ToFullString());
-
-                    this.Log.Add(methodDeclarationSyntax.ToFullString());
-
-                    // this is hacky as fuck
-                    // Split on first ocurrence of ) which is probably the method end.
-                    classMethods += methodDeclarationSyntax.ToFullString().Split(')')[0] + "); \n";
-                }
+                var classMethods = GetPublicClassMethods(declaringClass);
 
                 var declaringClassName = declaringClass.GetClassName();
                 context.AddSource($"I{declaringClassName}.cs", SourceText.From($@"
@@ -80,11 +74,83 @@ namespace {classNamespace} {{
 
     {classMethods}
 
+    {publicProperties}
+
     }}
 }}
 ", Encoding.UTF8));
             }
         }
-    }
 
+        private string GetPublicClassMethods(ClassDeclarationSyntax declaringClass)
+        {
+            string classMethodsString = "";
+
+            var publicNodes = declaringClass.ChildNodes().OfType<MethodDeclarationSyntax>()
+                .GetWithPublicKeyword();
+
+            foreach (var methodDeclarationSyntax in publicNodes)
+            {
+                this.Log.Add(methodDeclarationSyntax.Identifier.ToFullString());
+
+                this.Log.Add(methodDeclarationSyntax.ToFullString());
+
+                // this is hacky as fuck
+                // Split on first ocurrence of ) which is probably the method end.
+                classMethodsString += methodDeclarationSyntax.ToFullString().Split(')')[0] + "); \n";
+            }
+
+            return classMethodsString;
+        }
+
+        private string GetPublicProperties(ClassDeclarationSyntax declaringClass)
+        {
+            string propertiesString = "";
+
+            var publicProperties = declaringClass.ChildNodes()
+                .OfType<PropertyDeclarationSyntax>()
+                .GetWithPublicKeyword();
+
+
+            foreach (var propertyDeclarationSyntax in publicProperties)
+            {
+                this.Log.Add("Property " + propertyDeclarationSyntax.ToFullString());
+
+                var hasGetter =
+                    propertyDeclarationSyntax.AccessorList?.Accessors.FirstOrDefault(x =>
+                        x.IsKind(SyntaxKind.GetAccessorDeclaration)) != null;
+
+                var hasExpressionBody = propertyDeclarationSyntax.ExpressionBody != null;
+
+
+                var hasSetter =
+                    propertyDeclarationSyntax.AccessorList?.Accessors.FirstOrDefault(x =>
+                        x.IsKind(SyntaxKind.SetAccessorDeclaration)) != null;
+
+                var getterSetterString = "";
+                if (hasGetter || hasExpressionBody)
+                {
+                    getterSetterString += "get; ";
+                }
+
+                if (hasSetter)
+                {
+                    getterSetterString += "set; ";
+                }
+
+                var fullString =
+                    $"public {propertyDeclarationSyntax.Type.ToFullString()} {propertyDeclarationSyntax.Identifier.ToFullString()} {{{getterSetterString}}}";
+
+
+                this.Log.Add("Property " + fullString);
+
+                // this is hacky as fuck
+                // Split on first ocurrence of ) which is probably the method end.
+                propertiesString += fullString + "\n";
+            }
+
+
+            return propertiesString;
+        }
+    }
 }

@@ -1,10 +1,9 @@
 namespace BoilerplateFree.Test
 {
-    using System;
     using Subpackage;
     using Xunit;
 
-    public class AutoGenerateInterfaceTest
+    public partial class AutoGenerateInterfaceTest
     {
         [Fact]
         public void AutoGenerateInterface_ShouldGenerateInterfaceWithAllPublicMethods()
@@ -14,6 +13,10 @@ namespace BoilerplateFree.Test
             // Act
             testClass.Foo();
             testClass.Bar(param1: 3);
+
+            // can read and write auto properties
+            int read = testClass.MyNextPublicInt;
+            testClass.MyNextPublicInt = 3;
         }
 
         [Fact]
@@ -28,17 +31,6 @@ namespace BoilerplateFree.Test
         {
             IClassWithUsingsToGenerateOutsideNamespace testClass = new ClassWithUsingsToGenerateOutsideNamespace(new Subclass());
             testClass.SetSubClass(new Subclass());
-        }
-
-        [AutoGenerateInterface]
-        public class GenerateAutoInterfaceClass : IGenerateAutoInterfaceClass
-        {
-            public void Foo()
-            {
-                Console.WriteLine("Foo");
-            }
-
-            public int Bar(int param1) => 1 + param1;
         }
     }
 }
