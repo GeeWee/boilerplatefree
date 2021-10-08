@@ -34,5 +34,7 @@ namespace BoilerplateFree.Test
         private int _firstVariable;
         private int _secondVariable;
         private int _thirdVariable;
+
+        private static int MyStaticField => 3;
     }
 }

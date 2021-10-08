@@ -87,7 +87,8 @@ namespace {classNamespace} {{
             string classMethodsString = "";
 
             var publicNodes = declaringClass.ChildNodes().OfType<MethodDeclarationSyntax>()
-                .GetWithPublicKeyword();
+                .GetWithPublicKeyword()
+                .GetWithoutStaticKeyword();
 
             foreach (var methodDeclarationSyntax in publicNodes)
             {
@@ -109,7 +110,8 @@ namespace {classNamespace} {{
 
             var publicProperties = declaringClass.ChildNodes()
                 .OfType<PropertyDeclarationSyntax>()
-                .GetWithPublicKeyword();
+                .GetWithPublicKeyword()
+                .GetWithoutStaticKeyword();
 
 
             foreach (var propertyDeclarationSyntax in publicProperties)
