@@ -85,7 +85,7 @@ namespace BoilerplateFree
                 .Select(n => n.Name.ToString())
                 .ToList();
         }
-        
+
         public static List<string> GetUsingsOutsideNamespace(this CompilationUnitSyntax root)
         {
             return root.ChildNodes()
@@ -93,14 +93,21 @@ namespace BoilerplateFree
                 .Select(n => n.Name.ToString())
                 .ToList();
         }
-        
+
         public static IEnumerable<T> GetWithPublicKeyword<T>(this IEnumerable<T> unfilteredTokens)
-        where T: MemberDeclarationSyntax
+            where T : MemberDeclarationSyntax
         {
             var publicNodes = unfilteredTokens.Where(property =>
                 property.Modifiers.Any(modifier => modifier.Kind() == SyntaxKind.PublicKeyword));
             return publicNodes;
-        } 
-            
+        }
+
+        public static IEnumerable<T> GetWithoutStaticKeyword<T>(this IEnumerable<T> unfilteredTokens)
+            where T : MemberDeclarationSyntax
+        {
+            var nonStaticNodes = unfilteredTokens.Where(property => property.Modifiers.All(modifier =>
+                modifier.Kind() != SyntaxKind.StaticKeyword));
+            return nonStaticNodes;
+        }
     }
 }

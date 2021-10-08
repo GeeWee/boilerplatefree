@@ -67,7 +67,9 @@ namespace BoilerplateFree
                 var usingsInsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsInsideNamespace());
                 var usingsOutsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsOutsideNamespace());
 
-                var fieldNodes = declaringClass.GetFields();
+                var fieldNodes = declaringClass.GetFields()
+                    .GetWithoutStaticKeyword();
+                
                 foreach (var field in fieldNodes)
                 {
                     this.Log.Add($"{field.ToFullString()} : type : {field.GetType()}");
