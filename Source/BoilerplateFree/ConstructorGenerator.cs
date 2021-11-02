@@ -36,13 +36,16 @@ namespace BoilerplateFree
             }
             catch (Exception e)
             {
+                this.Log.Add(e.ToString());
                 this.Log.Add(e.StackTrace);
             }
-
-            context.AddSource("Logs",
-                SourceText.From(
-                    $@"/*{Environment.NewLine + string.Join(Environment.NewLine, this.Log) + Environment.NewLine}*/",
-                    Encoding.UTF8));
+            finally
+            {
+                context.AddSource("Logs",
+                    SourceText.From(
+                        $@"/*{Environment.NewLine + string.Join(Environment.NewLine, this.Log) + Environment.NewLine}*/",
+                        Encoding.UTF8));
+            }
         }
 
         public void ExecuteInTryCatch(GeneratorExecutionContext context)
@@ -58,13 +61,22 @@ namespace BoilerplateFree
                 var classNamespace = compilationUnit.GetNamespace();
 
                 this.Log.Add($"Namespace: " + classNamespace);
+                this.Log.Add($"Working on class: " + declaringClass.GetClassName());
 
                 var usingsInsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsInsideNamespace());
                 var usingsOutsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsOutsideNamespace());
 
                 var fieldNodes = declaringClass.GetFields()
                     .GetWithoutStaticKeyword()
-                    .GetUnInitialized();
+                    .GetUnInitialized()
+                    .ToList();
+
+                if (fieldNodes.Count == 0)
+                {
+                    this.Log.Add("No fields exist that should be initialized on class. Doing nothing.");
+                    Log.Add("--- Finished with class ---- \n");
+                    continue;
+                }
                 
                 foreach (var field in fieldNodes)
                 {
@@ -75,7 +87,7 @@ namespace BoilerplateFree
 
                     this.Log.Add(field.Declaration.Type.ToString());
                 }
-
+                
                 // Build up list of parameters
                 var parameterList = "";
                 for (int i = 0; i < names.Count - 1; i++)
@@ -109,6 +121,8 @@ namespace {classNamespace} {{
 
 }}
 ", Encoding.UTF8));
+                
+                Log.Add("--- Finished with class ---- \n");
             }
         }
     }
