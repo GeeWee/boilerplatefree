@@ -52,7 +52,6 @@ namespace BoilerplateFree
                 var names = new List<string>();
                 var types = new List<string>();
 
-                // TODO there is a GetUsings in the extensions
 
                 var compilationUnit = declaringClass.GetCompilationUnit();
 
@@ -60,15 +59,12 @@ namespace BoilerplateFree
 
                 this.Log.Add($"Namespace: " + classNamespace);
 
-                // this.Log.Add(compilationUnit.ToFullString());
-                // this.Log.Add($"Usings count: {compilationUnit.GetUsings().Count}");
-                // this.Log.Add($"usings:" + string.Join(",", compilationUnit.GetUsings()));
-
                 var usingsInsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsInsideNamespace());
                 var usingsOutsideNamespace = RoslynStringBuilders.BuildUsingStrings(compilationUnit.GetUsingsOutsideNamespace());
 
                 var fieldNodes = declaringClass.GetFields()
-                    .GetWithoutStaticKeyword();
+                    .GetWithoutStaticKeyword()
+                    .GetUnInitialized();
                 
                 foreach (var field in fieldNodes)
                 {
