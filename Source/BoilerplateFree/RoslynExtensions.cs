@@ -109,5 +109,11 @@ namespace BoilerplateFree
                 modifier.Kind() != SyntaxKind.StaticKeyword));
             return nonStaticNodes;
         }
+        
+        // Remove all fields that have an initializer already set (aka myVarName = "foo")
+        public static IEnumerable<FieldDeclarationSyntax> GetUnInitialized(this IEnumerable<FieldDeclarationSyntax> unfilteredTokens)
+        {
+            return unfilteredTokens.Where(token => token.Declaration.Variables.All((var) => var.Initializer == null));
+        }
     }
 }
