@@ -38,6 +38,10 @@ namespace BoilerplateFree
             {
                 this.Log.Add(e.ToString());
                 this.Log.Add(e.StackTrace);
+                if (Environment.GetEnvironmentVariable("BOILERPLATEFREE_TEST") != "1")
+                {
+                    throw;
+                }
             }
             finally
             {
