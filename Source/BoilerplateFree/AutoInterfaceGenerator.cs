@@ -36,12 +36,19 @@ namespace BoilerplateFree
             catch (Exception e)
             {
                 this.Log.Add(e.StackTrace);
+                this.Log.Add(e.ToString());
+                if (Environment.GetEnvironmentVariable("BOILERPLATEFREE_TEST") != "1")
+                {
+                    throw;
+                }
             }
-
-            context.AddSource("Logs",
-                SourceText.From(
-                    $@"/*{Environment.NewLine + string.Join(Environment.NewLine, this.Log) + Environment.NewLine}*/",
-                    Encoding.UTF8));
+            finally
+            {
+                context.AddSource("Logs",
+                    SourceText.From(
+                        $@"/*{Environment.NewLine + string.Join(Environment.NewLine, this.Log) + Environment.NewLine}*/",
+                        Encoding.UTF8));
+            }
         }
 
 
