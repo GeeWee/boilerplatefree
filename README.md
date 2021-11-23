@@ -4,6 +4,8 @@
 
 **This project is still in alpha stages. Please try it out and report any issues.**
 
+**You need to use at least .NET 5.0.4 for this library to work. Earlier versions of .NET 5 will not work**
+
 Remove boilerplate via C# 9 [source generators](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/)
 and attributes. The attributes currently supported are:
 
