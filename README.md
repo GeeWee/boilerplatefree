@@ -2,7 +2,7 @@
 
 [Install on Nuget](https://www.nuget.org/packages/BoilerplateFree/)
 
-**This project is still in alpha stages. Please try it out and report any issues.**
+**This project in alpha stages, however it is not currently maintained. Please feel free to fork it if you want to develop further on the concept.**
 
 **You need to use at least .NET 5.0.4 for this library to work. Earlier versions of .NET 5 will not work**
 
